@@ -43,22 +43,32 @@ public class App {
 
         BubbleSort<Integer> bolha = new BubbleSort<>();
         InsertionSort<Integer> insertion = new InsertionSort<>();
+        SelectionSort<Integer> selection = new SelectionSort<>();
 
         Integer[] vetorOrdenadoBolha = bolha.ordenar(vetor);
         Integer[] vetorOrdenadoInsertion = insertion.ordenar(vetor);
+        Integer[] vetorOrdenadoSelection = selection.ordenar(vetor);
 
         System.out.println("\nVetor ordenado método Bolha:");
         System.out.println("Comparações: " + bolha.getComparacoes());
         System.out.println("Movimentações: " + bolha.getMovimentacoes());
         System.out.println("Tempo de ordenação (ms): " + bolha.getTempoOrdenacao());
+        System.out.println("Vetor ordenado: " + Arrays.toString(vetorOrdenadoBolha));
         System.out.println("-------------------------------------------------");
+
         System.out.println("\nVetor ordenado método Inserção:");
         System.out.println("Comparações: " + insertion.getComparacoes());
         System.out.println("Movimentações: " + insertion.getMovimentacoes());
         System.out.println("Tempo de ordenação (ms): " + insertion.getTempoOrdenacao());
-        /* TO DO
-        *Fazer a implementacao do restante do main para a ordenacao 
-        *  com os algoritmos InsertionSort e SelectionSort
-        */
+        System.out.println("Vetor ordenado: " + Arrays.toString(vetorOrdenadoInsertion));
+        System.out.println("-------------------------------------------------");
+
+        System.out.println("\nVetor ordenado método Seleção:");
+        System.out.println("Comparações: " + selection.getComparacoes());
+        System.out.println("Movimentações: " + selection.getMovimentacoes());
+        System.out.println("Tempo de ordenação (ms): " + selection.getTempoOrdenacao());
+        System.out.println("Vetor ordenado: " + Arrays.toString(vetorOrdenadoSelection));
+        System.out.println("-------------------------------------------------");
+
     }
 }
