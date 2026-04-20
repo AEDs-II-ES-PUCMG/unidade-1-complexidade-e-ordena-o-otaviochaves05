@@ -35,6 +35,8 @@ public class AppOficina {
 
     static final int MAX_PEDIDOS = 100;
     static Produto[] produtos;
+    static Produto[] produtosOrdenadosCodigo;
+    static Produto[] produtosOrdenadosDescricao;
     static int quantProdutos = 0;
     static String nomeArquivoDados = "produtos.txt";
     static IOrdenador<Produto> ordenador;
@@ -126,18 +128,11 @@ public class AppOficina {
         return dadosCarregados;
     }
 
-
     static Produto localizarProduto() {
         cabecalho();
         System.out.println("Localizando um produto");
         int numero = lerNumero("Digite o identificador do produto", Integer.class);
-        Produto localizado = null;
-        
-        for (int i = 0; i < quantProdutos && localizado == null; i++) {
-            if (produtos[i].hashCode() == numero)
-                localizado = produtos[i];
-        }
-        return localizado;
+        return buscaBinaria(produtos, numero);
     }
 
     private static void mostrarProduto(Produto produto) {
@@ -211,6 +206,14 @@ public class AppOficina {
         teclado = new Scanner(System.in);
         
         produtos = carregarProdutos(nomeArquivoDados);
+        produtosOrdenadosCodigo = Arrays.copyOf(produtos, quantProdutos);
+        produtosOrdenadosDescricao = Arrays.copyOf(produtos, quantProdutos);
+
+        IOrdenador<Produto> merge = new MergeSort<>();
+
+        produtosOrdenadosCodigo = merge.ordenar(produtosOrdenadosCodigo, new ComparadorPorCodigo());
+        produtosOrdenadosDescricao = merge.ordenar(produtosOrdenadosDescricao, new ComparadorPorDescricao());
+
         embaralharProdutos();
 
         int opcao = -1;
@@ -229,5 +232,26 @@ public class AppOficina {
             pausa();
         }while (opcao != 0);
         teclado.close();
-    }                        
+    }    
+    
+    static Produto buscaBinaria(Produto[] lista, int codigo) {
+        int inicio = 0;
+        int fim = lista.length - 1;
+
+        while (inicio <= fim) {
+            int meio = (inicio + fim) / 2;
+
+            int codigoAtual = lista[meio].hashCode();
+
+            if (codigoAtual == codigo) {
+                return lista[meio];
+            } else if (codigoAtual < codigo) {
+                inicio = meio + 1;
+            } else {
+                fim = meio - 1;
+            }
+        }
+
+        return null;
+    }
 }
